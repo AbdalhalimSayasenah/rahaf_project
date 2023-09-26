@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
       ],
 
       theme: ThemeManager.getAppTheme(),
-      title: "RM Kindergarten",
+      title: "روضة المروج",
       home: const MainWindow(),
 
       // Define your routes here if needed

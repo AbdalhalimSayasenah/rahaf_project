@@ -40,64 +40,9 @@ class _PaidFeesWindowState extends State<PaidFeesWindow> {
 
   _calculateTotalPaidAmount() {
     totalPaidAmount = paidStudents.fold<double>(
-        0.0,
-        (previousValue, studentData) =>
-            previousValue + studentData[student_window.columnPayment]);
-  }
-
-  _showEditPaymentDialog(int studentID, double currentPayment) {
-    final TextEditingController paymentController =
-        TextEditingController(text: currentPayment.toStringAsFixed(2));
-
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text("تعديل المبلغ المدفوع"),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextFormField(
-                controller: paymentController,
-                keyboardType: TextInputType.number,
-                decoration: const InputDecoration(
-                  hintText: "المبلغ المدفوع",
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'يرجى إدخال المبلغ المدفوع';
-                  }
-                  return null;
-                },
-              ),
-            ],
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text("إلغاء"),
-            ),
-            TextButton(
-              onPressed: () async {
-                final newPayment = double.tryParse(paymentController.text);
-                if (newPayment != null) {
-                  final sql = '''
-                    UPDATE ${student_window.tableName}
-                    SET ${student_window.columnPayment} = $newPayment
-                    WHERE ${student_window.columnId} = $studentID
-                  ''';
-                  await sqlDB.updateData(sql);
-                  _loadPaidStudents();
-                  Navigator.of(context).pop();
-                }
-              },
-              child: const Text("حفظ"),
-            ),
-          ],
-        );
-      },
+      0.0,
+      (previousValue, studentData) =>
+          previousValue + (studentData[student_window.columnPayment] as double),
     );
   }
 
@@ -113,9 +58,7 @@ class _PaidFeesWindowState extends State<PaidFeesWindow> {
           final studentData = paidStudents[index];
           final studentName = studentData[student_window.columnName];
           final className = studentData[student_window.columnClassId];
-          final classCost = studentData[classes_window.columnCost];
           final paidAmount = studentData[student_window.columnPayment];
-          final studentID = studentData[student_window.columnId];
 
           return Card(
             child: ListTile(
@@ -135,12 +78,6 @@ class _PaidFeesWindowState extends State<PaidFeesWindow> {
                       fontWeight: FontWeight.bold,
                       color: Colors.green,
                     ),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      _showEditPaymentDialog(studentID, paidAmount);
-                    },
-                    icon: const Icon(Icons.edit),
                   ),
                 ],
               ),

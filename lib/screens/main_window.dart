@@ -13,7 +13,7 @@ class _MainWindowState extends State<MainWindow> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('روضة رهف وميس'),
+        title: const Text('روضة المروج'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(25.0),
