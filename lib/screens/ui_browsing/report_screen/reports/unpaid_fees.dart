@@ -3,14 +3,14 @@
 import 'package:flutter/material.dart';
 import 'package:rahaf_project/screens/database/mydb.dart';
 
-class UnpaidFeesWindwo extends StatefulWidget {
-  const UnpaidFeesWindwo({Key? key}) : super(key: key);
+class UnpaidFeesWindow extends StatefulWidget {
+  const UnpaidFeesWindow({Key? key}) : super(key: key);
 
   @override
-  _UnpaidFeesWindwoState createState() => _UnpaidFeesWindwoState();
+  _UnpaidFeesWindowState createState() => _UnpaidFeesWindowState();
 }
 
-class _UnpaidFeesWindwoState extends State<UnpaidFeesWindwo> {
+class _UnpaidFeesWindowState extends State<UnpaidFeesWindow> {
   late SqlDb sqlDB;
   List<Map<String, dynamic>> unpaidStudents = [];
 
@@ -23,7 +23,7 @@ class _UnpaidFeesWindwoState extends State<UnpaidFeesWindwo> {
 
   _loadUnpaidStudents() async {
     // Fetch students who have not paid the full fee based on class cost
-    final query = '''
+    const query = '''
       SELECT students.*, classes.cl_cost
       FROM students
       INNER JOIN classes ON students.st_class_id = classes.cl_id
@@ -64,6 +64,7 @@ class _UnpaidFeesWindwoState extends State<UnpaidFeesWindwo> {
             onTap: () {
               _editStudentPayment(studentData);
             },
+            leading: const Icon(Icons.person_2_rounded),
             title: Text(
               "${studentData['st_name']}",
               style: const TextStyle(

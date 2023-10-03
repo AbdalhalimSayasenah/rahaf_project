@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:rahaf_project/screens/database/mydb.dart';
 import 'students_widets.dart' as student_window; // Import the new file
 
@@ -165,6 +166,8 @@ class _StudentWindowState extends State<StudentWindow> {
                     return null;
                   },
                 ),
+
+                // replace the TextFormField with a NumberField
                 TextFormField(
                   controller: paymentController,
                   decoration: const InputDecoration(hintText: "المبلغ المدفوع"),
@@ -263,5 +266,26 @@ class _StudentWindowState extends State<StudentWindow> {
         );
       },
     );
+  }
+}
+
+class NumericalRangeFormatter extends TextInputFormatter {
+  final double min;
+  final double max;
+
+  NumericalRangeFormatter({required this.min, required this.max});
+
+  @override
+  TextEditingValue formatEditUpdate(
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
+    if (newValue.text == '') {
+      return newValue;
+    } else if (int.parse(newValue.text) < min) {
+      return const TextEditingValue().copyWith(text: min.toStringAsFixed(2));
+    } else {
+      return int.parse(newValue.text) > max ? oldValue : newValue;
+    }
   }
 }

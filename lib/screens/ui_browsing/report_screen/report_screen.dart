@@ -31,16 +31,6 @@ class _ReportScreenState extends State<ReportScreen> {
               icon: const Icon(Icons.how_to_reg_sharp),
               label: const Text("الطلاب الذين استوفوا الرسوم"),
             ),
-            // ElevatedButton.icon(
-            //   onPressed: _classesBrowser,
-            //   icon: const Icon(Icons.class_),
-            //   label: const Text("تصفح الصفوف"),
-            // ),
-            // ElevatedButton.icon(
-            //   onPressed: _reportBrowser,
-            //   icon: const Icon(Icons.receipt_long_outlined),
-            //   label: const Text("التقارير"),
-            // ),
           ],
         ),
       ),
@@ -49,7 +39,7 @@ class _ReportScreenState extends State<ReportScreen> {
 
   void _gotoUnPaidFees() {
     Navigator.push(context,
-        MaterialPageRoute(builder: (context) => const UnpaidFeesWindwo()));
+        MaterialPageRoute(builder: (context) => const UnpaidFeesWindow()));
   }
 
   void _gotoPaidFees() {
